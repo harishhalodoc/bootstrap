@@ -72,7 +72,7 @@ describe('Offcanvas', () => {
 
       spyOn(offCanvas, 'hide')
 
-      document.dispatchEvent(keyDownEsc)
+      offCanvasEl.dispatchEvent(keyDownEsc)
 
       expect(offCanvas.hide).toHaveBeenCalled()
     })
@@ -386,7 +386,7 @@ describe('Offcanvas', () => {
       expect(Offcanvas.prototype.toggle).not.toHaveBeenCalled()
     })
 
-    it('should not call toggle if another offcanvas is open', done => {
+    it('should call hide first, if another offcanvas is open', done => {
       fixtureEl.innerHTML = [
         '<button id="btn2" data-bs-toggle="offcanvas" data-bs-target="#offcanvas2" ></button>',
         '<div id="offcanvas1" class="offcanvas"></div>',
@@ -402,7 +402,7 @@ describe('Offcanvas', () => {
         trigger2.click()
       })
       offcanvasEl1.addEventListener('hidden.bs.offcanvas', () => {
-        expect(Offcanvas.getInstance(offcanvasEl2)).toEqual(null)
+        expect(Offcanvas.getInstance(offcanvasEl2)).not.toBeNull()
         done()
       })
       offcanvas1.show()

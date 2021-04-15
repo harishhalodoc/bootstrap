@@ -214,16 +214,16 @@ const onDOMContentLoaded = callback => {
 
 const isRTL = () => document.documentElement.dir === 'rtl'
 
-const defineJQueryPlugin = (name, plugin) => {
+const defineJQueryPlugin = plugin => {
   onDOMContentLoaded(() => {
     const $ = getjQuery()
     /* istanbul ignore if */
     if ($) {
-      const JQUERY_NO_CONFLICT = $.fn[name]
-      $.fn[name] = plugin.jQueryInterface
-      $.fn[name].Constructor = plugin
-      $.fn[name].noConflict = () => {
-        $.fn[name] = JQUERY_NO_CONFLICT
+      const JQUERY_NO_CONFLICT = $.fn[plugin.NAME]
+      $.fn[plugin.NAME] = plugin.jQueryInterface
+      $.fn[plugin.NAME].Constructor = plugin
+      $.fn[plugin.NAME].noConflict = () => {
+        $.fn[plugin.NAME] = JQUERY_NO_CONFLICT
         return plugin.jQueryInterface
       }
     }
